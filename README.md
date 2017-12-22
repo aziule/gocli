@@ -1,9 +1,9 @@
 # gocli
 (Yet Another) Go CLI management tool
 
-gocli provides everything you need in order to add CLI to an app.
+[![GoDoc](https://godoc.org/github.com/Aziule/gocli?status.svg)](https://godoc.org/github.com/Aziule/gocli)
 
-Godoc: incoming
+gocli provides everything you need in order to add CLI to an app.
 
 ## Usage
 incoming

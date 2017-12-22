@@ -39,7 +39,7 @@ func (h *CliHandler) RegisterCommand(command Command) {
 	h.commands = append(h.commands, command)
 }
 
-// HandleCommand handles a command identified by its name
+// Handle handles a command identified by its name
 func (h *CliHandler) Handle() error {
 	if !flag.Parsed() {
 		flag.Parse()
@@ -64,7 +64,7 @@ func (h *CliHandler) Handle() error {
 
 		if err := f.Parse(h.topLevelFlags.Args()[1:]); err != nil {
 			// @todo: handle
-			return errors.New(fmt.Sprintf("Could not parse flags: %s", err))
+			return fmt.Errorf("Could not parse flags: %s", err)
 		}
 
 		return command.Execute(f)
@@ -72,7 +72,7 @@ func (h *CliHandler) Handle() error {
 
 	h.topLevelFlags.Usage()
 
-	return errors.New(fmt.Sprintf("Command %s not found", name))
+	return fmt.Errorf("Command %s not found", name)
 }
 
 // explain explains to the user how to use the commands and what commands are available
