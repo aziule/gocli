@@ -3,12 +3,13 @@
 
 [![GoDoc](https://godoc.org/github.com/Aziule/gocli?status.svg)](https://godoc.org/github.com/Aziule/gocli)
 
-gocli provides everything you need in order to add CLI management to an app. For example:
-- Using a simple command `myapp run`
-- Using specific arguments `myapp run --port 3000`
+gocli provides everything you need in order to add CLI management to an app:
+- `myapp run`
+- `myapp run --port 3000`
 
-Running with a compiled executable: `myapp <command> <arguments>`
-Running locally with sources: `go run ./*.go <command> <arguments>`
+Helper commands:
+- Running with a compiled executable: `myapp <command> <arguments>`
+- Running locally with sources: `go run ./*.go <command> <arguments>`
 
 ## Usage
 
