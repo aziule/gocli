@@ -1,4 +1,4 @@
-// Package gocli provides everything you need in order to add CLI to an app.
+// Package gocli provides everything you need in order to add CLI management to an app.
 // @todo: add a Writer for writing to the output
 package gocli
 
