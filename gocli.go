@@ -47,7 +47,6 @@ func (h *CliHandler) Handle() error {
 
 	if h.topLevelFlags.NArg() < 1 {
 		h.topLevelFlags.Usage()
-		// @todo: handle
 		return errors.New("Invalid arguments passed")
 	}
 
@@ -63,7 +62,6 @@ func (h *CliHandler) Handle() error {
 		command.SetFlags(f)
 
 		if err := f.Parse(h.topLevelFlags.Args()[1:]); err != nil {
-			// @todo: handle
 			return fmt.Errorf("Could not parse flags: %s", err)
 		}
 
