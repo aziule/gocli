@@ -3,7 +3,8 @@
 
 [![GoDoc](https://godoc.org/github.com/Aziule/gocli?status.svg)](https://godoc.org/github.com/Aziule/gocli)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Aziule/gocli)](https://goreportcard.com/report/github.com/Aziule/gocli)
-[![Build Status](http://img.shields.io/travis/aziule/gocli.svg?style=flat-square)](https://travis-ci.org/aziule/gocli)
+[![Coverage Status](https://coveralls.io/repos/github/Aziule/gocli/badge.svg?branch=master)](https://coveralls.io/github/Aziule/gocli?branch=master)
+[![Build Status](https://travis-ci.org/Aziule/gocli.svg?branch=master)](https://travis-ci.org/aziule/gocli)
 [![License](http://img.shields.io/:license-mit-blue.svg)](LICENSE)
 
 gocli provides everything you need in order to add CLI management to an app:
