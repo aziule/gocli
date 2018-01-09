@@ -1,0 +1,19 @@
+language: go
+go:
+    - 1.7.x
+    - 1.8.x
+    - 1.9.x
+before_install:
+    - export PATH=$PATH:$GOPATH/bin
+    - go get -u github.com/modocache/gover
+    - go get -u github.com/fzipp/gocyclo
+before_script:
+    - go tool vet ./
+    - go tool vet -unsafeptr=false `go list ./... | grep -v vendor | sed -e "s,^,$GOPATH/src/,;s,.*:,,"`
+    - gocyclo -over 15 `find . -iname '*.go' | grep -v 'vendor' | grep -v '_test.go'`
+script:
+    - go list ./... | grep -v vendor | xargs -n1 -I {} -P 4 go test -v -covermode=count -coverprofile=../../../{}/gocli.coverprofile {}
+    - go build
+after_success:
+    - gover
+    - goveralls -coverprofile=gocli.coverprofile -service=travis-ci
