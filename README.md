@@ -1,33 +1,44 @@
 # gocli
-(Yet Another) Go CLI management tool
+
+gocli helps you implement CLI commands for your app by providing:
+- A common interface for your CLI commands
+- A handler handle 'em all
+
+
+How is that useful?
+- One single handler for every CLI commands
+- No need to recreate the wheel every time you want your app to serve CLI commands
+- Easy debugging
+- Easy to use
+- Fast implementation of new CLI commands
 
 [![GoDoc](https://godoc.org/github.com/Aziule/gocli?status.svg)](https://godoc.org/github.com/Aziule/gocli)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Aziule/gocli)](https://goreportcard.com/report/github.com/Aziule/gocli)
 [![Build Status](https://travis-ci.org/Aziule/gocli.svg?branch=master)](https://travis-ci.org/aziule/gocli)
 [![License](http://img.shields.io/:license-mit-blue.svg)](LICENSE)
 
-gocli provides everything you need in order to add CLI management to an app:
-- `myapp run`
-- `myapp run --port 3000`
+## Getting Started
 
-Helper commands:
-- Running with a compiled executable: `myapp <command> <arguments>`
-- Running locally with sources: `go run ./*.go <command> <arguments>`
+### Prerequisites
 
-## Usage
+Developed with Go 1.8+ (installation instructions [here](https://golang.org/doc/install))
 
-The first step is to create the available commands. To do so, create a `struct` for each command you want to be able to run, and make them
-implement the `Command` interface.
+### Installing
 
-For example:
+`go get -u github.com/aziule/gocli`
+
+### Usage
+
+First, create a new CLI command and make it implement the `Command` interface:
 
 ```golang
-// RunCommand is the command responsible for running our app
+// RunCommand contains the variables set by SetFlags (if any)
+// that will be used within Execute()
 type RunCommand struct {
 	configFilePath string
 }
 
-// Usage returns the usage text for the command
+// Usage describes how our command works
 func (c *RunCommand) Usage() string {
 	return `run [-config=./config.json]:
 	The description of what the command is doing`
@@ -37,35 +48,68 @@ func (c *RunCommand) Usage() string {
 func (c *RunCommand) Execute(f *flag.FlagSet) error {
 	// Do whatever you need here
 	fmt.Println(c.configFilePath)
-
+	
 	return nil
 }
 
-// FlagSet returns the command's flag set
+// FlagSet defines what flags to set for the command
 func (c *RunCommand) SetFlags(f *flag.FlagSet) {
+    // This will store the flag's value to the command's structure
 	f.StringVar(&c.configFilePath, "config", "config.json", "Config file path")
 }
 
-// Name returns the command's name, to be used when invoking it from the cli
+// Name returns the command's name to be invoked from the CLI
 func (c *RunCommand) Name() string {
 	return "run"
 }
 ```
 
-Then, create a `Handler` to register your commands and make it handle the commands:
+Then, create a new `CliHandler` and register the previous CLI command:
 
 ```golang
 func main() {
-	cliHandler := gocli.NewHandler()
-	cliHandler.RegisterCommand(&RunCommand{})
-	err := cliHandler.Handle()
-
-	if err != nil {
-		panic(fmt.Sprintf("An error occurred when handling the command: %s", err))
-	}
+    cliHandler := new gocli.CliHandler()
+    cliHandler.RegisterCommand(&RunCommand{})
+    err := cliHandler.Handle()
+    
+    if err != nil {
+        // Handle the error your way
+    }
 }
 ```
 
-You are now able to run:
-- `myapp run` with a compiled executable
-- `go run ./*.go run` with source code
+**Running the command**
+```bash
+# From the dev environment
+go run ./*.go <command> -config /path/to/config.json
+
+# Using the binary
+/path/to/myapp <command> -config /path/to/config.json
+```
+
+For example:
+
+```bash
+/path/to/myapp run -config /path/to/config.json
+# "Here is the config: config.json"
+```
+
+**Viewing the usage**
+```bash
+/path/to/myapp
+# COMMANDS:
+# run [-config=./config.json]:
+#     The description of what the command is doing
+```
+
+## Contributing
+
+Please feel free to report any issue or improvement suggestion.
+
+## Authors
+
+* **William Claude** - *Developer* - [Github](https://github.com/aziule)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
