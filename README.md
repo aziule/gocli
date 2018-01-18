@@ -2,7 +2,7 @@
 
 gocli helps you implement CLI commands for your app by providing:
 - A common interface for your CLI commands
-- A handler handle 'em all
+- A handler to handle 'em all
 
 
 How is that useful?
@@ -12,12 +12,12 @@ How is that useful?
 - Easy to use
 - Fast implementation of new CLI commands
 
+## Getting Started
+
 [![GoDoc](https://godoc.org/github.com/Aziule/gocli?status.svg)](https://godoc.org/github.com/Aziule/gocli)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Aziule/gocli)](https://goreportcard.com/report/github.com/Aziule/gocli)
 [![Build Status](https://travis-ci.org/Aziule/gocli.svg?branch=master)](https://travis-ci.org/aziule/gocli)
 [![License](http://img.shields.io/:license-mit-blue.svg)](LICENSE)
-
-## Getting Started
 
 ### Prerequisites
 
