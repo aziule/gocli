@@ -6,7 +6,7 @@ gocli helps you implement CLI commands for your app by providing:
 
 
 How is that useful?
-- One single handler for every CLI commands
+- One single handler for every CLI command
 - No need to recreate the wheel every time you want your app to serve CLI commands
 - Easy debugging
 - Easy to use

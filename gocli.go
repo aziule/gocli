@@ -9,6 +9,12 @@ import (
 	"os"
 )
 
+var (
+	ErrInvalidArguments = errors.New("Invalid arguments passed")
+	ErrUnparsableFlag = errors.New("Could not parse flag")
+	ErrCommandNotFound = errors.New("Command not found")
+)
+
 // Command is the main interface for creating new commands to be used from the CLI
 type Command interface {
 	Name() string
@@ -47,7 +53,7 @@ func (h *CliHandler) Handle() error {
 
 	if h.topLevelFlags.NArg() < 1 {
 		h.topLevelFlags.Usage()
-		return errors.New("Invalid arguments passed")
+		return ErrInvalidArguments
 	}
 
 	name := h.topLevelFlags.Arg(0)
@@ -62,7 +68,7 @@ func (h *CliHandler) Handle() error {
 		command.SetFlags(f)
 
 		if err := f.Parse(h.topLevelFlags.Args()[1:]); err != nil {
-			return fmt.Errorf("Could not parse flags: %s", err)
+			return ErrUnparsableFlag
 		}
 
 		return command.Execute(f)
@@ -70,7 +76,7 @@ func (h *CliHandler) Handle() error {
 
 	h.topLevelFlags.Usage()
 
-	return fmt.Errorf("Command %s not found", name)
+	return ErrCommandNotFound
 }
 
 // explain explains to the user how to use the commands and what commands are available

@@ -2,7 +2,6 @@ package gocli
 
 import (
 	"flag"
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -23,8 +22,6 @@ func (c *RunCommand) Usage() string {
 // Execute runs the command
 func (c *RunCommand) Execute(f *flag.FlagSet) error {
 	// Do whatever you need here
-	fmt.Println(c.configFilePath)
-
 	return nil
 }
 
@@ -53,7 +50,7 @@ func TestHandleWithNoFlags(t *testing.T) {
 	handler.RegisterCommand(cmd)
 
 	err := handler.Handle()
-	assert.Equal(t, "Invalid arguments passed", err.Error())
+	assert.Equal(t, ErrInvalidArguments, err)
 }
 
 func TestHandleUnexistingCommand(t *testing.T) {
@@ -64,11 +61,19 @@ func TestHandleUnexistingCommand(t *testing.T) {
 	handler.topLevelFlags.Parse([]string{"impossibru"})
 
 	err := handler.Handle()
-	assert.Equal(t, "Command impossibru not found", err.Error())
+	assert.Equal(t, ErrCommandNotFound, err)
 }
 
 func TestHandleCommandWithDefaultFlagsValues(t *testing.T) {
 }
 
 func TestHandleCommand(t *testing.T) {
+	handler := NewHandler()
+	cmd := &RunCommand{}
+	handler.RegisterCommand(cmd)
+
+	handler.topLevelFlags.Parse([]string{"run"})
+
+	err := handler.Handle()
+	assert.Equal(t, nil, err)
 }
