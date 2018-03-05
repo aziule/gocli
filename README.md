@@ -35,32 +35,32 @@ First, create a new CLI command and make it implement the `Command` interface:
 // RunCommand contains the variables set by SetFlags (if any)
 // that will be used within Execute()
 type RunCommand struct {
-	configFilePath string
+    configFilePath string
 }
 
 // Usage describes how our command works
 func (c *RunCommand) Usage() string {
-	return `run [-config=./config.json]:
-	The description of what the command is doing`
+    return `run [-config=./config.json]:
+    The description of what the command is doing`
 }
 
 // Execute runs the command
 func (c *RunCommand) Execute(f *flag.FlagSet) error {
-	// Do whatever you need here
-	fmt.Println(c.configFilePath)
-	
-	return nil
+    // Do whatever you need here
+    fmt.Println(c.configFilePath)
+    
+    return nil
 }
 
 // FlagSet defines what flags to set for the command
 func (c *RunCommand) SetFlags(f *flag.FlagSet) {
     // This will store the flag's value to the command's structure
-	f.StringVar(&c.configFilePath, "config", "config.json", "Config file path")
+    f.StringVar(&c.configFilePath, "config", "config.json", "Config file path")
 }
 
 // Name returns the command's name to be invoked from the CLI
 func (c *RunCommand) Name() string {
-	return "run"
+    return "run"
 }
 ```
 
